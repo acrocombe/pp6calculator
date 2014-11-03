@@ -14,5 +14,5 @@ Installation
 
 References
 ==========
--[MPAGS PP6 Course Page](http://warwick.ac.uk/fac/sci/physics/research/epp/resources/teaching/software_development_2014
+-[MPAGS PP6 Course Page](http://warwick.ac.uk/fac/sci/physics/research/epp/resources/teaching/software_development_2014)
 -[Git SCM](http://git-scm.com)
