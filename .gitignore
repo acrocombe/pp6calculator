@@ -3,6 +3,9 @@
 *~
 *.swp
 
+# Exercises folder
+Exercises/
+
 # Mac Filesystem
 .DS_Store?
 
