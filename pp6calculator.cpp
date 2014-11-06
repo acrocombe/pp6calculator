@@ -1,6 +1,26 @@
 #include <iostream>
 #include <climits>
 
+double add( double a, double b)
+{
+	return a + b;
+}
+
+double subtract( double a, double b)
+{
+	return a - b;
+}
+
+double multiply( double a, double b)
+{
+	return a * b;
+}
+
+double divide( double a, double b)
+{
+	return a / b;
+}
+
 int main()
 {
 	// Declare variables to be multiplied as well as output
@@ -30,7 +50,7 @@ int main()
 		}
 
 		//Break from loop on user input of q
-		if ( function == 'q' )
+		else if ( function == 'q' )
 		{
 			break;
 		}
@@ -72,7 +92,7 @@ int main()
 		if ( function == '+' ) 
 		{
 			//Compute addition
-			out = num1 + num2;
+			out = add(num1, num2);
 
 			//Output addition to user
 			std::cout << "Addition of two numbers is: ";
@@ -82,7 +102,7 @@ int main()
 		else if ( function == '-' ) 
 		{
 			//Compute subtraction
-			out = num1 - num2;
+			out = subtract(num1, num2);
 
 			//Output subtraction to user
 			std::cout << "Subtraction of two numbers is: ";
@@ -92,7 +112,7 @@ int main()
 		else if ( function == '*' ) 
 		{
 			//Compute product
-			out = num1 * num2;
+			out = multiply(num1, num2);
 
 			//Output product to user
 			std::cout << "Product of two numbers is: ";
@@ -112,7 +132,7 @@ int main()
 			else
 			{
 				//Compute division
-				out = num1 / num2;
+				out = divide(num1, num2);
 			
 				//Output division to user
 				std::cout << "Division of two numbers is: ";
@@ -120,9 +140,8 @@ int main()
 			}
 		}
 		
-
 		//Check for invalid choice of operation
-		else
+		else	
 		{
 			std::cout << "Invalid choice of operation, please enter +, -, *, / or q \n";
 		}
