@@ -11,7 +11,7 @@ pp6calculator is distributed under the terms of the Boost Software License.
 
 Installation
 ------------
-Included is the pp6calculator.cpp file, to use the program, run a compiler and 
+Included is the pp6calculator.cpp file, to use the program, compile the source code and 
 then run the outputted executable.
 
 
