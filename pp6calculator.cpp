@@ -17,34 +17,70 @@ double multiply( double a, double b)
 	return a * b;
 }
 
-double divide( double a, double b)
+bool divide( double a, double b, double& out1)
 {
-	return a / b;
+	if ( 0 == b )
+	{ 
+		return false;
+	}
+	else
+	{
+		out1 = a / b;
+		
+		return true;
+	}
 }
 
 //Calculates intercept of a line on the x-axis
-double intercept( double a, double b)
+bool intercept( double a, double b, double& out1)
 {
-	return (- b) / a;
+	if ( 0 == a )
+	{
+		return false;
+	}
+	else
+	{
+		out1 = (- b) / a;
+	
+		return true;		
+
+	}
+
 }
 
-//Solves a quadratic equation with a positive square root, positive solution
-double quadraticp( double a, double b, double c)
+//Solves a quadratic equation with a positive square root
+bool quadratic( double a, double b, double c, double& out1, double& out2 )
 {
-	return ( (-b) + sqrt((( b * b ) - ( 4 * a * c))))/( 2 * a);
+		
+	//Check that the quadratic equation has real roots
+	if ( (( b * b ) - ( 4 * a * c ) ) < 0 )
+ 	{
+	
+		return false;	
+
+	}
+	else
+	{
+		//out1 and out2 are the solutions of the quadratic equation
+		out1 = ( (-b) + sqrt((( b * b ) - ( 4 * a * c))))/( 2 * a);
+		out2 = ( (-b) - sqrt((( b * b ) - ( 4 * a * c))))/( 2 * a);
+
+		return true;
+	}
+
 }
 
 //Solves a quadratic equation with a positive square root, negative solution
-double quadraticm( double a, double b, double c)
-{
-	return ( (-b) - sqrt((( b * b ) - ( 4 * a * c))))/( 2 * a);
-}
+//double quadraticm( double a, double b, double c)
+//{
+//	return ( (-b) - sqrt((( b * b ) - ( 4 * a * c))))/( 2 * a);
+//}
 
 //Gives the real part of the solution of a quadratic with complex solutions
-double compquadreal( double a, double b)
-{
-	return ( (-b) / (2 * a));
-}
+//double compquadreal( double a, double b)
+//{
+//	return ( (-b) / (2 * a));
+//}
 
 //Give the positive imaginary part of the solution of a quadratic with complex solutions
 double compquadim( double a, double b, double c)
@@ -69,6 +105,46 @@ void print(char a, double b)
 	std::cout << "Result of " << a <<" operation is: " << b << std::endl;
 }	
 
+void swap( double& a, double& b)
+{
+	double c = a;
+	
+	a = b;
+	b = c;
+}
+
+bool inputcheck()
+{
+	if (!std::cin)
+	{
+		std::cerr << "Error in input of number" << std::endl;
+		//Clear buffer to reset for next loop
+
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+		return false;
+	}
+	return true;
+}
+
+bool bubblesort( double *a, int i )
+{
+	bool finish(false);
+	while ( finish == false )
+		{
+		finish = true;
+		for ( int j=0; j < (i-1); ++j )
+			{
+				if ( a[j] < a[(j + 1)])
+				{
+					swap ( a[j], a[j+1] );
+					finish = false;
+				}
+				
+			}
+		}
+}
+
 int main()
 {
 	// Declare variables to be multiplied as well as output
@@ -76,30 +152,29 @@ int main()
 	double b(0);
 	double c(0);
 	double d(0);
-	double e(0);
+ 	double e(0);
 	double f(0);
 	double g(0);
 	double h(0);
+
+	double out1(0);
+	double out2(0);	
 	
-	char function;	
+	char function;
+
+	bool errorcheck;	
 	
 	//Check for user exiting program
 	while ( function != 'x')
 	{	
-		
 		//Ask user for choice of operation
-		std::cout << "Choose the function to be carried out (use x to exit program) \nUse +, -, * or / to carry out mathematical functions \nUse i to find the intercept of a line on the x-axis \nUse q to find the solutions to a quadratic equation \nUse 3 or 4 to find the length of a three or four vector\nUse m to find the invariant mass of two particles\n ";
+		std::cout << "Choose the function to be carried out (use x to exit program) \nUse +, -, * or / to carry out mathematical functions \nUse i to find the intercept of a line on the x-axis \nUse q to find the solutions to a quadratic equation \nUse 3 or 4 to find the length of a three or four vector\nUse m to find the invariant mass of two particles \n ";
 		std::cin >> function;
 		
 		//Check for invalid input of function
-		if (!std::cin)
+		if (inputcheck() == false)
 		{
-			std::cerr << "Error in input of operation" << std::endl;
-			//Clear buffer to reset for next loop
-
-			std::cin.clear();
-			std::cin.ignore(INT_MAX, '\n');
-			continue;		
+			continue;
 		}
 
 		//Break from loop on user input of x
@@ -107,8 +182,48 @@ int main()
 		{
 			break;
 		}
-		
-		if ( (function == '+') || (function == '-') || (function == '*') || (function == '/'))
+			
+		else if ( function == 's' )
+		{
+			//Ask for user input
+			std::cout << "Input size of array to be sorted \n";
+
+			int size(0);
+
+			std::cin >> size;
+
+			//Check for invalid input	
+			if (inputcheck() == false)
+			{
+				continue;
+			}
+
+			
+			double array[size];
+
+			//Input array values
+			std::cout << "Input values of the array in order" << std::endl;
+			for ( int k = 0; k < size; k++ )
+			{
+				std::cin >> array[k];
+				if (inputcheck() == false)
+				{
+					continue;
+				}
+
+			}
+			
+			//Sort the numbers and print 
+			bubblesort(array, size);
+			std::cout << "Sorted array is" << std::endl;
+			for ( int k = 0; k < size; k++ )
+			{
+				std::cout << array[k] << "\n";
+			}	
+				
+		}
+
+		else if ( (function == '+') || (function == '-') || (function == '*') || (function == '/'))
 		{	
 			//Print instructions
 			std::cout << "Input numbers to be operated on in the form: (a) " << function << " (b) \n";
@@ -119,15 +234,10 @@ int main()
 			
 
 			//Check for invalid input
-			if (!std::cin)
-			{
-				std::cerr << "Error in input of number" << std::endl;
-				//Clear buffer to reset for next loop
-
-				std::cin.clear();
-				std::cin.ignore(INT_MAX, '\n');
-				continue;		
-			}
+			if (inputcheck() == false)
+				{
+					continue;
+				}
 
 			//Addition
 			if ( function == '+' ) 
@@ -151,18 +261,16 @@ int main()
 			//Division
 			else if ( function == '/' ) 
 			{
-				//Check for dividing by zero
-				if ( 0 == b )
+
+				errorcheck = divide(a, b, out1);
+				if ( true == errorcheck)
 				{
-					std::cout << "Cannot divide by zero, please enter a non zero second number \n";
+					print(function, out1);
 				}
-
-
 				else
 				{
-					//Compute division and output to user
-					print(function, divide(a, b));	
-				}
+					std::cout << "Error in input, check that b is not equal to zero \n";
+				}		
 			}	
 		}
 		
@@ -180,18 +288,22 @@ int main()
 			
 
 			//Check for invalid input
-			if (!std::cin)
+
+			if (inputcheck() == false)
 			{
-				std::cerr << "Error in input of number" << std::endl;
-				//Clear buffer to reset for next loop
-
-				std::cin.clear();
-				std::cin.ignore(INT_MAX, '\n');
-				continue;		
+				continue;
 			}
-
-			//Print the x intercept of a straight line
-			std::cout << "The x intercept of the straight line is: " << intercept(a, b) << std::endl;
+		
+			//Compute and print the x intercept of a straight line
+			errorcheck = intercept(a, b, out1);
+			if ( true == errorcheck)
+			{
+				std::cout << "The x intercept of the straight line is: " << out1 << std::endl;
+			}
+			else
+			{
+				std::cout << "Error in input, check that a is not equal to zero \n";
+			}
 
 
 		}
@@ -207,26 +319,22 @@ int main()
 			std::cout << "Input a, b and c in order \n";
 			std::cin >> a >> b >> c;
 			
-
 			//Check for invalid input
-			if (!std::cin)
+			if (inputcheck() == false)
 			{
-				std::cerr << "Error in input of number" << std::endl;
-				//Clear buffer to reset for next loop
-
-				std::cin.clear();
-				std::cin.ignore(INT_MAX, '\n');
-				continue;		
+				continue;
 			}
 
-			if ( (( b * b ) - ( 4 * a * c ) ) < 0 )
-			{
-				std:: cout << "The two solutions to the quadratic equation are: " << compquadreal(a, b) << " +- " << compquadim(a, b, c) << "i \n";
+			errorcheck = quadratic(a, b, c, out1, out2);
+
+			if ( errorcheck == true )
+			{		
+				std:: cout << "The two solutions to the quadratic equation are: " << out1 << " and " << out2 << std::endl;
 			}
 			
 			else
 			{
-				std::cout << "The two solutions to the quadratic equation are: " << quadraticp(a, b, c) << " and " << quadraticm(a, b, c) << std::endl;
+				std::cout << "No real solutions to the quadratic equation \n";
 			}
 
 		}
@@ -238,20 +346,15 @@ int main()
 			std::cout << "Input the 3 vector in the order ((x1), (x2), (x3)) \n";
 			
 			//Ask for user input
-			std::cin >> a;
+			std::cin >> a >> b >> c;
 			
 
 			//Check for invalid input 
-			if (!std::cin)
+			if (inputcheck() == false)
 			{
-				std::cerr << "Error in input of number" << std::endl;
-				//Clear buffer to reset for next loop
-
-				std::cin.clear();
-				std::cin.ignore(INT_MAX, '\n');
-				continue;		
+				continue;
 			}
-		
+
 			std::cout << "The length of the three vector is: " << threevector(a, b, c) << std::endl;
 
 	
@@ -268,15 +371,11 @@ int main()
 			
 
 			//Check for invalid input 
-			if (!std::cin)
+			if (inputcheck() == false)
 			{
-				std::cerr << "Error in input of number" << std::endl;
-				//Clear buffer to reset for next loop
-
-				std::cin.clear();
-				std::cin.ignore(INT_MAX, '\n');
-				continue;		
+				continue;
 			}
+
 			std::cout << "The length of the four vector is: " << fourvector(a, b, c, d) << std::endl;
 
 		
@@ -294,16 +393,11 @@ int main()
 			
 
 			//Check for invalid input
-			if (!std::cin)
+			if (inputcheck() == false)
 			{
-				std::cerr << "Error in input of number" << std::endl;
-				//Clear buffer to reset for next loop
-
-				std::cin.clear();
-				std::cin.ignore(INT_MAX, '\n');
-				continue;		
+				continue;
 			}
-
+			
 			//Check that energy is greater then total momentum for particle 1
 			if ( (a * a) < ( (b * b) + (c * c) + (d * d) ))
 			{
@@ -319,16 +413,11 @@ int main()
 			
 
 			//Check for invalid input
-			if (!std::cin)
+			if (inputcheck() == false)
 			{
-				std::cerr << "Error in input of number" << std::endl;
-				//Clear buffer to reset for next loop
-
-				std::cin.clear();
-				std::cin.ignore(INT_MAX, '\n');
-				continue;		
+				continue;
 			}
-
+		
 			//Check that energy is greater then total momentum for particle 1
 			if ( (e * e) < ( (f * f) + (g * g) + (h * h) ))
 			{
@@ -343,7 +432,7 @@ int main()
 		//Check for invalid choice of operation
 		else	
 		{
-			std::cout << "Invalid choice of operation, please enter +, -, *, / or q \n";
+			std::cout << "Invalid choice of operation \n";
 		}
 	}
 	return 0;
