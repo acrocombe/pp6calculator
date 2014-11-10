@@ -2,149 +2,11 @@
 #include <climits>
 #include <cmath>
 
-double add( double a, double b)
-{
-	return a + b;
-}
+//Program Libraries
+#include "PP6Math.hpp"
 
-double subtract( double a, double b)
-{
-	return a - b;
-}
-
-double multiply( double a, double b)
-{
-	return a * b;
-}
-
-bool divide( double a, double b, double& out1)
-{
-	if ( 0 == b )
-	{ 
-		return false;
-	}
-	else
-	{
-		out1 = a / b;
-		
-		return true;
-	}
-}
-
-//Calculates intercept of a line on the x-axis
-bool intercept( double a, double b, double& out1)
-{
-	if ( 0 == a )
-	{
-		return false;
-	}
-	else
-	{
-		out1 = (- b) / a;
-	
-		return true;		
-
-	}
-
-}
-
-//Solves a quadratic equation with a positive square root
-bool quadratic( double a, double b, double c, double& out1, double& out2 )
-{
-		
-	//Check that the quadratic equation has real roots
-	if ( (( b * b ) - ( 4 * a * c ) ) < 0 )
- 	{
-	
-		return false;	
-
-	}
-	else
-	{
-		//out1 and out2 are the solutions of the quadratic equation
-		out1 = ( (-b) + sqrt((( b * b ) - ( 4 * a * c))))/( 2 * a);
-		out2 = ( (-b) - sqrt((( b * b ) - ( 4 * a * c))))/( 2 * a);
-
-		return true;
-	}
-
-}
-
-//Solves a quadratic equation with a positive square root, negative solution
-//double quadraticm( double a, double b, double c)
-//{
-//	return ( (-b) - sqrt((( b * b ) - ( 4 * a * c))))/( 2 * a);
-//}
-
-//Gives the real part of the solution of a quadratic with complex solutions
-//double compquadreal( double a, double b)
-//{
-//	return ( (-b) / (2 * a));
-//}
-
-//Give the positive imaginary part of the solution of a quadratic with complex solutions
-double compquadim( double a, double b, double c)
-{
-	return (sqrt(-( ( b * b ) - ( 4 * a * c ) ))/( 2 * a ) );
-}
-
-//Calculates length of a 3 vector
-double threevector( double a, double b, double c)
-{
-	return sqrt ( (a * a) + (b * b) + (c * c));
-}
-
-//Calculates length of a 4 vector
-double fourvector( double a, double b, double c, double d)
-{
-	return sqrt (std::abs( (a * a) -( (b * b) + (c * c) + (d * d) ) ));
-}
-
-void print(char a, double b)
-{
-	std::cout << "Result of " << a <<" operation is: " << b << std::endl;
-}	
-
-void swap( double& a, double& b)
-{
-	double c = a;
-	
-	a = b;
-	b = c;
-}
-
-bool inputcheck()
-{
-	if (!std::cin)
-	{
-		std::cerr << "Error in input of number" << std::endl;
-		//Clear buffer to reset for next loop
-
-		std::cin.clear();
-		std::cin.ignore(INT_MAX, '\n');
-		return false;
-	}
-	return true;
-}
-
-bool bubblesort( double *a, int i )
-{
-	bool finish(false);
-	while ( finish == false )
-		{
-		finish = true;
-		for ( int j=0; j < (i-1); ++j )
-			{
-				if ( a[j] < a[(j + 1)])
-				{
-					swap ( a[j], a[j+1] );
-					finish = false;
-				}
-				
-			}
-		}
-}
-
+//Main Program
+//-----------------------------------------------------------------
 int main()
 {
 	// Declare variables to be multiplied as well as output
@@ -243,19 +105,22 @@ int main()
 			if ( function == '+' ) 
 			{
 				//Compute addition and output to user
-				print(function, add(a, b));
+				add(a, b, out1);
+				print(function, out1);
 			}
 			//Subtraction
 			else if ( function == '-' ) 
 			{
 				//Compute subtraction and output to user
-				print(function, subtract(a, b));
+				subtract(a, b, out1);
+				print(function, out1);
 			}
 			//Multiplication
 			else if ( function == '*' ) 
 			{
 				//Compute multiplication and output to user
-				print(function, multiply(a, b));
+				multiply(a, b, out1);
+				print(function, out1);
 			}
 
 			//Division
@@ -263,7 +128,7 @@ int main()
 			{
 
 				errorcheck = divide(a, b, out1);
-				if ( true == errorcheck)
+				if ( 0 == errorcheck)
 				{
 					print(function, out1);
 				}
@@ -296,7 +161,7 @@ int main()
 		
 			//Compute and print the x intercept of a straight line
 			errorcheck = intercept(a, b, out1);
-			if ( true == errorcheck)
+			if ( 0 == errorcheck)
 			{
 				std::cout << "The x intercept of the straight line is: " << out1 << std::endl;
 			}
@@ -327,7 +192,7 @@ int main()
 
 			errorcheck = quadratic(a, b, c, out1, out2);
 
-			if ( errorcheck == true )
+			if ( errorcheck == 0 )
 			{		
 				std:: cout << "The two solutions to the quadratic equation are: " << out1 << " and " << out2 << std::endl;
 			}
@@ -354,8 +219,9 @@ int main()
 			{
 				continue;
 			}
-
-			std::cout << "The length of the three vector is: " << threevector(a, b, c) << std::endl;
+			
+			threevector(a, b, c, out1);
+			std::cout << "The length of the three vector is: " << out1 << std::endl;
 
 	
 		}
@@ -367,7 +233,7 @@ int main()
 			std::cout << "Input the 4 vector in the order ((x0), (x1), (x2), (x3)) \n";
 			
 			//Ask for user input
-			std::cin >> a >> b >> c >> d;
+			std::cin >> a >> b >> c >> d;			
 			
 
 			//Check for invalid input 
@@ -376,7 +242,8 @@ int main()
 				continue;
 			}
 
-			std::cout << "The length of the four vector is: " << fourvector(a, b, c, d) << std::endl;
+			fourvector(a, b, c, d, out1);
+			std::cout << "The length of the four vector is: " << out1 << std::endl;
 
 		
 		}
@@ -424,8 +291,9 @@ int main()
 				std::cout << "Particles total momentum cannot be greater then its total energy, check values and re-enter \n";
 				continue;
 			}
-
-			std::cout << "The total invariant mass of the two particles is: " << fourvector((a+e), (b+f), (c+g), (d+h)) << std::endl;
+		
+			fourvector((a+e), (b+f), (c+g), (d+h), out1);
+			std::cout << "The total invariant mass of the two particles is: " << out1 << std::endl;
 
 		}
 		
@@ -437,3 +305,4 @@ int main()
 	}
 	return 0;
 }
+
