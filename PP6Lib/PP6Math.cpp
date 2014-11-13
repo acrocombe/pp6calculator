@@ -4,7 +4,7 @@
 #include <climits>
 #include <cmath>
 
-//Definitions for PP6Math functons
+//Definitions for PP6Math functions
 
 int add( double a, double b, double& out1)
 {
@@ -101,18 +101,23 @@ void swap( double& a, double& b)
 	a = b;
 	b = c;
 }
-bool inputcheck()
+double inputcheck()
 {
-	if (!std::cin)
+	double input(0);
+	
+	std::cin >> input;
+
+	while (!std::cin)
 	{
 		std::cerr << "Error in input of number" << std::endl;
 		//Clear buffer to reset for next loop
 
 		std::cin.clear();
 		std::cin.ignore(INT_MAX, '\n');
-		return false;
+		
+		std::cin >> input;
 	}
-	return true;
+	return input;
 }
 bool bubblesort( double *a, int i )
 {

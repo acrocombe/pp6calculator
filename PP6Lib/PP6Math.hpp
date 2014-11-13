@@ -13,7 +13,7 @@ int threevector( double a, double b, double c, double& out1);
 int fourvector( double a, double b, double c, double d, double& out1);
 void print(char a, double b);
 void swap( double& a, double& b);
-bool inputcheck();
+double inputcheck();
 bool bubblesort( double *a, int i );
 
 #endif // PP6CALCULATOR_PP6MATH_HH
