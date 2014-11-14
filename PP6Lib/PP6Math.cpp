@@ -3,6 +3,7 @@
 #include <iostream>
 #include <climits>
 #include <cmath>
+#include <cstdlib>
 
 //Definitions for PP6Math functions
 
@@ -90,6 +91,10 @@ int fourvector( double a, double b, double c, double d, double& out1)
 	out1 = sqrt (std::abs( (a * a) - ( (b * b) + (c * c) + (d * d)) )  );
 	return 0;
 }
+double energy( double a, double b, double c, double d)
+{
+	return sqrt ( (a*a) + (b*b) + (c*c) + (d*d) ); 
+}		
 void print(char a, double b)
 {
 	std::cout << "Result of " << a <<" operation is: " << b << std::endl;
@@ -119,21 +124,72 @@ double inputcheck()
 	}
 	return input;
 }
-bool bubblesort( double *a, int i )
+bool bubblesort( double a[], double l[], int i)
 {
 	bool finish(false);
+
 	while ( finish == false )
 		{
 		finish = true;
-		for ( int j=0; j < (i-1); ++j )
+		for ( int k=0; k < (i-1); ++k )
 			{
-				if ( a[j] < a[(j + 1)])
+				if ( a[k] < a[(k + 1)])
 				{
-					swap ( a[j], a[j+1] );
+					swap ( a[k], a[k+1] );
+					swap ( l[k], l[k+1] );
 					finish = false;
 				}
 				
 			}
 		}
 }
+//Sorts a multidimensional array
+bool bubblesortmulti( double a[][5], double l[][2], int i, int j)
+{
+	bool finish(false);
+
+	while ( finish == false )
+		{
+		finish = true;
+		for ( int k=0; k < (i-1); ++k )
+			{
+				if ( a[k][j] < a[(k + 1)][j])
+				{
+					swap ( a[k][j], a[k+1][j] );
+					swap ( l[k][0], l[k+1][0] );
+					swap ( l[k][1], l[k+1][1] );
+					finish = false;
+				}
+				
+			}
+		}
+}
+int generate( double a[][4], int i, double& mean, double& sd)
+{
+	double px(0), py(0), pz(0), m(0), E(0), Etot(0), Esqtot(0), meanEsq(0);
+	int out1(0), out2(0);
+	for ( int j=0; j < i; ++j)
+	{
+		px = rand()%100;
+	       	py = rand()%100;
+		pz = rand()%100;
+		m = rand()%100;
+
+		E = sqrt( ( m * m ) + (px * px) + (py * py) + (pz * pz) );
+
+		a[j][0] = E;
+		a[j][1] = px;
+		a[j][2] = py;
+		a[j][3] = pz;
+
+		Etot += E;
+		Esqtot += (E*E);
+	}
+	out1 = divide (Etot, i, mean);
+	out2 = divide (Esqtot, i, meanEsq);
+
+	sd = sqrt(meanEsq - (mean * mean));
+}
+
+
 

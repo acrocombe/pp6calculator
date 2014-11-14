@@ -11,9 +11,12 @@ pp6calculator is distributed under the terms of the Boost Software License.
 
 Installation
 ------------
-Included is the pp6calculator.cpp file, to use the program, compile the source code and 
-then run the outputted executable.
+Prerequisites
+-------------
+- Unix operating system
+- [CMake](http://www.cmake.org) build tool.
 
+To build pp6calculator, run the cmake command in the directory you wish to install the program and pass it the path to the pp6calculator source directory, e.g. cmake /pp6calculator.git/ 
 
 References
 ==========
