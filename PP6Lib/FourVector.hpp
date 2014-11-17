@@ -1,24 +1,42 @@
 #ifndef FOURVECTOR_HPP
 #define FOURVECTOR_HPP
 
-//Declare four vector struct
-struct FourVector;
+class FourVector 
+{
+	public: 
+		//Constructors		
+		FourVector() { t = 0; x = 0; y = 0; z = 0; s = 0}
 
-//Creator and destroyer functions
-FourVector* createFourVector();
+		FourVector(const double t_, const double x_, const double y_, const double z_);
 
-void destroyFourVector(FourVector *&fv);
+		FourVector(const FourVector& other);
 
-//Set the values of the four vector
-void setFourVector (FourVector *fv, double t, double x, double y, double z);
+		//Example destructor
 
-//Retrieve the values of a four-vector
-void getFourVector ( FourVector *fv, double& t, double& x, double&y, double& z);
+		// Public member functions
+		void setFourVector( double t_, double x_, double y_, double z_); /* not finished */
+		
+		double getT() const { return t;};
+		double getX() const { return x;};
+		double getY() const { return y;};
+		double getZ() const { return z;};
+		double interval() const { return s;};
 
-//Definition for four-vector boost
-int boost_z( FourVector *fv, double v);
+		int boostFourVector(const double v);
 
-//Calculate the interval of a four-vector
-int interval( FourVector *fv, double& interval);
+		//Operator overloads
+		FourVector& operator+=(const /* not finished */
+
+	private:
+		//Member variables
+		double t;
+		double x; 
+		double y; 
+		double z;
+		double s;
+		
+		//Private member functions
+		void intervalFourVector();
+};
 
 #endif // FOURVECTOR_HPP

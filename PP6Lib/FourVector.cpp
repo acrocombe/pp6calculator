@@ -4,50 +4,17 @@
 
 #include "FourVector.hpp"
 
-//Define a four-vector struct
-struct FourVector {double t; double x; double y; double z;};
-
-//Creator and destroyer function for the FourVector
-FourVector* createFourVector()
+//Definitions for FourVector constructors
+FourVector::FourVector(const double t_, const double x_, const double y_, const double z_) : t(t_), x(x_), y(y_), z(z_), s(0)
 {
-	return new FourVector;
+	intervalFourVector();
 }
 
-void destroyFourVector( FourVector *&fv )
-{
-	if (fv)
-	{ 
-		delete fv;
-		fv = 0;
-	}
-}
-
-//Set the values of the four-vector
-void setFourVector( FourVector *fv, double t, double x, double y, double z)
-{
-	if (fv)
-	{
-		fv->t = t;
-		fv->x = x;
-		fv->y = y;
-		fv->z = z;
-	}	
-}
-
-//Retrieve the values of a four-vector
-void getFourVector ( FourVector *fv, double& t, double& x, double&y, double& z)
-{
-	if (fv)
-	{
-		t = fv-> t;
-		x = fv-> x;
-		y = fv-> y;
-		z = fv-> z;
-	}
-}
+FourVector::FourVector(const FourVector& other) : t(other.t), x(other.x), y(other.y), z(other.z), s(other.s)
+{}
 
 //Definition for four-vector boost
-int boost_z( FourVector *fv, double v)
+int FourVector::boostFourVector(const double v)
 {
 	if ( v == 0 )
 	{
@@ -65,25 +32,17 @@ int boost_z( FourVector *fv, double v)
 
 		gamma = ( 1 / sqrt(( 1 - (v * v) )));
 
-		fv->t = gamma * (fv->t - (v * fv->z));
-		fv->x = fv->x;
-		fv->y = fv->y;
-		fv->z = gamma * ( fv->z - (v * fv->t));
+		t = gamma * (t - (v * z));
+		x = x;
+		y = y;
+		z = gamma * (z - (v * t));
 	
 		return 0;
 	}
 }
 
 //Calculate the interval of a four-vector
-int interval( FourVector *fv, double& interval)
+void FourVector::intervalFourVector() 
 {
-        if ( (fv->t * fv->t) > ( (fv->x * fv->x) + (fv->y * fv->y) + (fv->z * fv->z) ) )
-	{
-		interval = sqrt (( (fv->t * fv->t) - ( (fv->x * fv->x) + (fv->y * fv->y) + (fv->z * fv->z)) )  );
-		return 0;
-	}
-	else 
-	{ 
-		return 1;
-	}
+        s = (t * t) - ( (x * x) + (y * y) + (z * z));
 }

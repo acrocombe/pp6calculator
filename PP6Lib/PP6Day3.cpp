@@ -27,7 +27,9 @@ void Day3(char submenu)
 		z = inputcheck();
 		v = inputcheck();
 		
-		FourVector *fv;
+		FourVector::fv(t, x, y, z);
+
+		/*FourVector *fv;
 		fv = createFourVector();
 
 		setFourVector ( fv, t, x, y, z);
@@ -51,7 +53,7 @@ void Day3(char submenu)
 			std::cout << "t: " << t << ", x: " << x << ", y: " << y << ", z: " << z << std::endl;
 		}
 
-		destroyFourVector(fv);
+		destroyFourVector(fv);*/
 	}
 
 	//Functionality to calculate interval of a 4-vector
