@@ -8,7 +8,7 @@ project(pp6calculator)
 
 # Use the standard flag set when using the GNU/Clang compiler
 include(CheckCXXCompilerFlag)
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNUIClang")
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
 	# Check for C++11 support, activating it if available
 	check_cxx_compiler_flag(-std=c++11 HAS_GNUSTYLE_CPP11)
 	if(HAS_GNUSTYLE_CPP11)
@@ -17,7 +17,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "GNUIClang")
 		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++98")
 	endif()
 	
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic-errors -Wall -Wextra - Werror -Wfatal-errors -Wwrite-strings -Woverloaded-virtual -fno-nonansi-builtins -fno-gnu-keywords -fstrict-aliasing")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -Wwrite-strings -Woverloaded-virtual")
 endif()
 
 # Tell compiler where to find headers
@@ -27,7 +27,7 @@ include_directories(PP6Lib)
 add_subdirectory(PP6Lib)
 
 # Add the pp6calculator program
-add_executable(pp6calculator pp6calculator.cpp PP6Lib/PP6Math.cpp PP6Lib/PP6Math.hpp PP6Lib/PP6Menus.cpp PP6Lib/PP6Menus.hpp PP6Lib/PP6Day1.cpp PP6Lib/PP6Day1.hpp PP6Lib/PP6Day2.cpp PP6Lib/PP6Day2.hpp PP6Lib/FileReader.cpp PP6Lib/FileReader.hpp)
+add_executable(pp6calculator pp6calculator.cpp)
 
 # Link pp6calculator to the pp6lib library
 target_link_libraries(pp6calculator pp6lib)

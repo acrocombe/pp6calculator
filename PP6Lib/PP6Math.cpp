@@ -108,8 +108,7 @@ void swap( double& a, double& b)
 }
 double inputcheck()
 {
-	double input(0);
-	
+	double input(0);	
 	std::cin >> input;
 
 	while (!std::cin)
@@ -124,7 +123,7 @@ double inputcheck()
 	}
 	return input;
 }
-bool bubblesort( double a[], double l[], int i)
+void bubblesort( double a[], double l[], int i)
 {
 	bool finish(false);
 
@@ -144,7 +143,7 @@ bool bubblesort( double a[], double l[], int i)
 		}
 }
 //Sorts a multidimensional array
-bool bubblesortmulti( double a[][5], double l[][2], int i, int j)
+void bubblesortmulti( double a[][5], double l[][2], int i, int j)
 {
 	bool finish(false);
 
@@ -164,10 +163,10 @@ bool bubblesortmulti( double a[][5], double l[][2], int i, int j)
 			}
 		}
 }
-int generate( double a[][4], int i, double& mean, double& sd)
+void generate( double a[][4], int i, double& mean, double& sd)
 {
 	double px(0), py(0), pz(0), m(0), E(0), Etot(0), Esqtot(0), meanEsq(0);
-	int out1(0), out2(0);
+	
 	for ( int j=0; j < i; ++j)
 	{
 		px = rand()%100;
@@ -185,8 +184,8 @@ int generate( double a[][4], int i, double& mean, double& sd)
 		Etot += E;
 		Esqtot += (E*E);
 	}
-	out1 = divide (Etot, i, mean);
-	out2 = divide (Esqtot, i, meanEsq);
+	divide (Etot, i, mean);
+	divide (Esqtot, i, meanEsq);
 
 	sd = sqrt(meanEsq - (mean * mean));
 }

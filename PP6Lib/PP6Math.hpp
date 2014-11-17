@@ -15,8 +15,8 @@ double energy( double a, double b, double c, double d);
 void print(char a, double b);
 void swap( double& a, double& b);
 double inputcheck();
-bool bubblesort( double *a, double *l, int i );
-bool bubblesortmulti( double a[][5], double l[][2], int i, int j );
-int generate( double a[][4], int i, double& mean, double& sd );
+void bubblesort( double *a, double *l, int i );
+void bubblesortmulti( double a[][5], double l[][2], int i, int j );
+void generate( double a[][4], int i, double& mean, double& sd );
 
 #endif // PP6CALCULATOR_PP6MATH_HH

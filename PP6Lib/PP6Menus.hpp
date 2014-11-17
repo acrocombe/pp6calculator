@@ -6,5 +6,6 @@
 char toplevel();
 char day1menu();
 char day2menu();
+char day3menu();
 
 #endif //PP6CALCULATOR_PP6MENUS_HH

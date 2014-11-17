@@ -234,7 +234,7 @@ void Day2(char submenu)
 						combevents[l][3] = p[j][3] + p[k][3];
 
 						//Calculate invariant mass of the pair
-						int calc = fourvector( combevents[l][0], combevents[l][1], combevents[l][2], combevents[l][3], combevents[l][4] );
+						fourvector( combevents[l][0], combevents[l][1], combevents[l][2], combevents[l][3], combevents[l][4] );
 						
 						//Record event numbers of the pair
 						mueventnum[l][0] = eventnum[j];

@@ -12,8 +12,8 @@ char toplevel()
 	// Ask user for choice of operations, partioned by day of the course implemented
 	std::cout << "        --------pp6calculator--------        " << std::endl;
 	std::cout << "Please choose which operations to use" << std::endl;
-	std::cout << "Operations from Day 1 and Day 2 are available" << std::endl;
-	std::cout << "Enter as 1 or 2 (use x to exit)" << std::endl;
+	std::cout << "Operations from Day 1, Day 2 and Day 3 are available" << std::endl;
+	std::cout << "Enter as 1, 2 or 3 (use x to exit)" << std::endl;
 
 	std::cin >> day;
 
@@ -85,3 +85,30 @@ char day2menu()
 	return function2;
 	
 }
+
+char day3menu()
+{
+	char function3('\0');
+	
+	//Ask user for choice of day 3 operations
+	std::cout << "\n        --------Day 3 Operations--------             " << std::endl;
+	std::cout << "Choose the function to be carried out (use x to exit)   " << std::endl;
+	std::cout << "Enter b to boost a 4-vector in the z direction   " << std::endl;
+	std::cout << "Enter l to calculate the length of a 4-vector" << std::endl;
+	
+	std::cin >> function3;	
+
+	//Check for invalid input of function
+	while (!std::cin)
+	{
+		std::cerr << "Error in input of the operation" << std::endl;
+		//Clear buffer to reset for next loop
+		std::cin.clear();
+		std::cin.ignore(INT_MAX, '\n');
+
+		std::cin >> function3;
+	}
+	return function3;
+	
+}
+	

@@ -10,18 +10,15 @@
 #include "PP6Menus.hpp"
 #include "PP6Day1.hpp"
 #include "PP6Day2.hpp"
+#include "PP6Day3.hpp"
 
 //Main Program
 //--------------------------------------------------------------------
 int main()
 {
 	// Declare output and selection variables
-	double out1(0),out2(0);	
-	
 	char menu;
 
-	bool errorcheck;	
-	
 	//Check for user exiting program
 	while ( menu != 'x')
 	{	
@@ -68,7 +65,23 @@ int main()
 		 	}
 	
 		}
-		
+		else if ( menu == '3' )
+		{
+			while (true)
+			{
+				char submenu;
+				//Check for user choice of operation
+				submenu = day3menu();
+
+				//Break from menu on user input of x
+				if ( submenu == 'x' )
+				{
+					break;
+				}
+				Day3(submenu);
+		 	}
+	
+		}
 		//Check for invalid choice of operation
 		else	
 		{
