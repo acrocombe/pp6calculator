@@ -34,7 +34,7 @@ void Day2(char submenu)
 		}
 		
 		double array[size];
-		double location[size];
+		int location[size];
 
 		for (int k = 0; k < size; k++)
 		{
@@ -53,7 +53,7 @@ void Day2(char submenu)
 		std::cout << "Sorted array is:" << std::endl;
 		for ( int k = 0; k < size; k++ )
 		{
-			std::cout << array[k] << "\n";
+			std::cout << array[location[k]-1] << "\n";
 		}	
 		std::cout << "Sorted array by original index location is:" << std::endl;
 		for ( int k = 0; k < size; k++ )
@@ -62,7 +62,7 @@ void Day2(char submenu)
 		}
 			
 	}
-	if ( submenu == 'g' )
+	else if ( submenu == 'g' )
 	{
 		//Ask for user input
 		std::cout << "Input number of events to be generated" << std::endl;
@@ -120,7 +120,7 @@ void Day2(char submenu)
 		std::cout << "The standard deviation of the generated events is: " << sd << std::endl;
 	}
 
-	if ( submenu == 'a' )
+	else if ( submenu == 'a' )
 	{
 		std::string file;
 		
@@ -142,7 +142,7 @@ void Day2(char submenu)
 		
 		//Check how large the file is
 		FileReader g(file);
-		int size = 1;
+		int size = 0;
 		if (g.isValid())
 		{
 			g.nextLine();
@@ -172,7 +172,7 @@ void Day2(char submenu)
 			while (f.nextLine())
 			{
 				//Retrieve event number as integer
-				eventnum[j] = f.getFieldAsDouble(1);
+				eventnum[j] = f.getFieldAsInt(1);
 
 				//Retrieve particle name as string
 				particle[j] = f.getFieldAsString(2);
@@ -195,16 +195,18 @@ void Day2(char submenu)
 		
 		//Find and read mu+ mu- particles in run4.dat
 		std::cout << "mu+ and mu- particles observed in run4.dat:" << std::endl;
-		std::cout << "Event, p_x  , p_y  , p_z" << std::endl;  
+		std::cout << "Event, E    , p_x  , p_y  , p_z" << std::endl;  
 		
 		int mupsize(0);
 		int mumsize(0);
 
-		for (int j = 0; j < size; j++ )
+		double mumass = 0.106;
+
+		for (int j(0); j < size; j++ )
 		{
 			if ( (particle[j] == "mu+" || particle[j] == "mu-") && datasource[j] == "run4.dat") 
 			{
-				std::cout << eventnum[j] << " , " << p[j][0] << ", " << p[j][1] << ", " << p[j][2] << std::endl;
+				std::cout << eventnum[j] << " , " << energy(mumass, p[j][0], p[j][1], p[j][2]) << ", " << p[j][0] << ", " << p[j][1] << ", " << p[j][2] << std::endl;
 			if ( particle[j] == "mu-"){ mumsize++;}
 			if ( particle[j] == "mu+"){ mupsize++;}
 			}
@@ -214,10 +216,14 @@ void Day2(char submenu)
 		int combsize = mupsize * mumsize;
 
 		double combevents[combsize][5];
-		double mueventnum[combsize][2];
-		
-		double mumass = 0.106;
+		int mueventnum[combsize][2];
+		int mupairindex[combsize];
 
+		for (int k(0);  k <combsize; k++)
+		{
+			mupairindex[k] = k + 1;
+		}
+		
 		int l(0);
 		for (int j = 0; j < size; j++ )
 		{
@@ -228,10 +234,10 @@ void Day2(char submenu)
 					if ( particle[k] == "mu-"  && datasource[k] == "run4.dat")
 					{
 						//Combine 4 momenta of each mu- mu+ pair
-						combevents[l][0] = energy(mumass, p[j][1], p[j][2], p[j][3]) + energy(mumass, p[k][1], p[k][2], p[k][3]); 
-						combevents[l][1] = p[j][1] + p[k][1];
-						combevents[l][2] = p[j][2] + p[k][2];
-						combevents[l][3] = p[j][3] + p[k][3];
+						combevents[l][0] = energy(mumass, p[j][0], p[j][1], p[j][2]) + energy(mumass, p[k][0], p[k][1], p[k][2]); 
+						combevents[l][1] = p[j][0] + p[k][0];
+						combevents[l][2] = p[j][1] + p[k][1];
+						combevents[l][3] = p[j][2] + p[k][2];
 
 						//Calculate invariant mass of the pair
 						fourvector( combevents[l][0], combevents[l][1], combevents[l][2], combevents[l][3], combevents[l][4] );
@@ -247,12 +253,12 @@ void Day2(char submenu)
 		
 		}
 		
-		bubblesortmulti( combevents, mueventnum, combsize, 4);
+		bubblesortmulti( combevents, mupairindex, combsize, 4);
 			
 		std::cout << "Largest 10 invariant mass combinations are: " << std::endl;
 		for ( int k = 0; k < 10; k++ )
 		{
-			std::cout << "Invariant mass: " << combevents[k][4] << ", mu+ event: " << mueventnum[k][0] << ", mu- event: " << mueventnum[k][1] << std::endl; 
+			std::cout << "Invariant mass: " << combevents[mupairindex[k]-1][4] << ", mu+ event: " << mueventnum[mupairindex[k]-1][0] << ", mu- event: " << mueventnum[mupairindex[k]-1][1] << std::endl; 
 		}	
 
 	}

@@ -13,15 +13,39 @@ FourVector::FourVector(const double t_, const double x_, const double y_, const 
 FourVector::FourVector(const FourVector& other) : t(other.t), x(other.x), y(other.y), z(other.z), s(other.s)
 {}
 
+void FourVector::setT(double t_)
+{
+	t = t_;
+	intervalFourVector();
+}
+
+void FourVector::setX(double x_)
+{
+	x = x_;
+	intervalFourVector();
+}
+
+void FourVector::setY(double y_)
+{
+	y = y_;
+	intervalFourVector();
+}
+
+void FourVector::setZ(double z_)
+{
+	z = z_;
+	intervalFourVector();
+}
+
 //Definition for four-vector boost
-int FourVector::boostFourVector(const double v)
+int FourVector::boost_z(const double v)
 {
 	if ( v == 0 )
 	{
 		return 1;	
 	}
 	
-	else if ( (v > 1) || (v < -1) )
+	else if ( (v >= 1) || (v <= -1) )
 	{
 		return 2;
 	}
@@ -41,8 +65,97 @@ int FourVector::boostFourVector(const double v)
 	}
 }
 
+//Definitions for operator overloads
+FourVector& FourVector::operator+=(const FourVector& rhs)
+{
+	t += rhs.t;
+	x += rhs.x;
+	y += rhs.y;
+	z += rhs.z;
+	intervalFourVector();
+	return *this;
+}
+
+FourVector& FourVector::operator-=(const FourVector& rhs)
+{
+	t -= rhs.t;
+	x -= rhs.x;
+	y -= rhs.y;
+	z -= rhs.z;
+	intervalFourVector();
+	return *this;
+}
+
+FourVector& FourVector::operator*=(const double rhs)
+{
+	t *= rhs;
+	x *= rhs;
+	y *= rhs;
+	z *= rhs;
+	intervalFourVector();
+	return *this;
+}
+
+FourVector& FourVector::operator/=(const double rhs)
+{
+	t /= rhs;
+	x /= rhs;
+	y /= rhs;
+	z /= rhs;
+	intervalFourVector();
+	return *this;
+}
+
+FourVector& FourVector::operator=(const FourVector& rhs)
+{
+	if (&rhs != this)
+	{
+		t = rhs.t;
+		x = rhs.x;
+		y = rhs.y;
+		z = rhs.z;
+		intervalFourVector();
+	}
+	return *this;
+}
+
+
 //Calculate the interval of a four-vector
 void FourVector::intervalFourVector() 
 {
         s = (t * t) - ( (x * x) + (y * y) + (z * z));
 }
+
+//Free operators for the FourVector class
+FourVector operator+(const FourVector& lhs, const FourVector& rhs)
+{
+	FourVector temp(lhs);
+	temp += rhs;
+	return temp;
+}
+
+FourVector operator-(const FourVector& lhs, const FourVector& rhs)
+{
+	FourVector temp(lhs);
+	temp -= rhs;
+	return temp;
+}
+
+std::istream& operator>>(std::istream& stream, FourVector& fv)
+{
+	double t, x, y, z;
+	stream >> t >> x >> y >> z;
+	fv.setT(t);
+	fv.setX(x);
+	fv.setY(y);
+	fv.setZ(z);
+	return stream;
+}
+
+std::ostream& operator<<(std::ostream& stream, const FourVector& fv)
+{
+	stream << "["<< fv.getT() << ", " << fv.getX() << ", " << fv.getY() << ", " << fv.getZ() << "]";
+	return stream;
+}
+
+

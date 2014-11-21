@@ -27,16 +27,14 @@ void Day3(char submenu)
 		z = inputcheck();
 		v = inputcheck();
 		
-		FourVector::fv(t, x, y, z);
-
-		/*FourVector *fv;
-		fv = createFourVector();
-
-		setFourVector ( fv, t, x, y, z);
+		FourVector fv (t, x, y, z);
 		
-		int boost = boost_z( fv, v);
+		int boost = fv.boost_z(v);
 
-		getFourVector ( fv, t, x, y, z);
+		t = fv.getT();
+		x = fv.getX();
+		y = fv.getY();
+		z = fv.getZ();
 
 		if ( boost == 1 )
 		{
@@ -44,7 +42,7 @@ void Day3(char submenu)
 		}
 		else if ( boost == 2 )	
 		{
-			std::cout << "Speed is greater then c, please enter v in units of c" << std::endl;
+			std::cout << "Speed is greater than or equal to c, please enter v in units of c" << std::endl;
 
 		}
 		else if ( boost == 0 )
@@ -53,7 +51,6 @@ void Day3(char submenu)
 			std::cout << "t: " << t << ", x: " << x << ", y: " << y << ", z: " << z << std::endl;
 		}
 
-		destroyFourVector(fv);*/
 	}
 
 	//Functionality to calculate interval of a 4-vector

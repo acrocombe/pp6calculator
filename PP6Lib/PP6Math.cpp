@@ -12,16 +12,19 @@ int add( double a, double b, double& out1)
 	out1 = a + b;
 	return 0;
 }
+
 int subtract( double a, double b, double& out1)
 {
 	out1 = a - b;
 	return 0;
 }
+
 int multiply( double a, double b, double& out1)
 {
 	out1 = a * b;
 	return 0;
 }
+
 int divide( double a, double b, double& out1)
 {
 	if ( 0 == b )
@@ -35,6 +38,7 @@ int divide( double a, double b, double& out1)
 		return 0;
 	}
 }
+
 //Calculates intercept of a line on the x-axis
 int intercept( double a, double b, double& out1)
 {
@@ -50,6 +54,7 @@ int intercept( double a, double b, double& out1)
 	}
 
 }
+
 //Solves a quadratic equation with a positive square root
 int quadratic( double a, double b, double c, double& out1, double& out2 )
 {
@@ -68,6 +73,7 @@ int quadratic( double a, double b, double c, double& out1, double& out2 )
 		return 0;
 	}
 }
+
 //Gives the real part of the solution of a quadratic with complex solutions
 //double compquadreal( double a, double b)
 //{
@@ -85,20 +91,24 @@ int threevector( double a, double b, double c, double& out1)
 	out1 = sqrt ( (a * a) + (b * b) + (c * c));
 	return 0;
 }
+
 //Calculates length of a 4 vector
 int fourvector( double a, double b, double c, double d, double& out1)
 {
 	out1 = sqrt (std::abs( (a * a) - ( (b * b) + (c * c) + (d * d)) )  );
 	return 0;
 }
+
 double energy( double a, double b, double c, double d)
 {
 	return sqrt ( (a*a) + (b*b) + (c*c) + (d*d) ); 
-}		
+}
+
 void print(char a, double b)
 {
 	std::cout << "Result of " << a <<" operation is: " << b << std::endl;
-}	
+}
+
 void swap( double& a, double& b)
 {
 	double c = a;
@@ -106,6 +116,15 @@ void swap( double& a, double& b)
 	a = b;
 	b = c;
 }
+
+void swap( int& a, int& b)
+{
+	int c = a;
+	
+	a = b;
+	b = c;
+}
+
 double inputcheck()
 {
 	double input(0);	
@@ -123,46 +142,61 @@ double inputcheck()
 	}
 	return input;
 }
-void bubblesort( double a[], double l[], int i)
+
+void bubblesort( double a[], int location[], int size)
 {
+	double a_temp[size];
+	for (int i(0); i < size; i++)
+	{
+	a_temp[i] = a[i];
+	}		
+
 	bool finish(false);
 
 	while ( finish == false )
 		{
 		finish = true;
-		for ( int k=0; k < (i-1); ++k )
+		for ( int k=0; k < (size-1); ++k )
 			{
-				if ( a[k] < a[(k + 1)])
+				if ( a_temp[k] < a_temp[(k + 1)])
 				{
-					swap ( a[k], a[k+1] );
-					swap ( l[k], l[k+1] );
+					swap ( a_temp[k], a_temp[k+1] );
+					swap ( location[k], location[k+1] );
 					finish = false;
 				}
 				
 			}
 		}
 }
+
 //Sorts a multidimensional array
-void bubblesortmulti( double a[][5], double l[][2], int i, int j)
+void bubblesortmulti( double a[][5], int location[], int size, int component)
 {
+	double a_temp[size][5];
+	for (int i(0); i < size; i++)
+	{
+		a_temp[i][component] = a[i][component];
+	}
+
 	bool finish(false);
 
 	while ( finish == false )
 		{
 		finish = true;
-		for ( int k=0; k < (i-1); ++k )
+		for ( int k=0; k < (size-1); ++k )
 			{
-				if ( a[k][j] < a[(k + 1)][j])
+				if ( a_temp[k][component] < a_temp[(k + 1)][component])
 				{
-					swap ( a[k][j], a[k+1][j] );
-					swap ( l[k][0], l[k+1][0] );
-					swap ( l[k][1], l[k+1][1] );
+					swap ( a_temp[k][4], a_temp[k+1][4] );
+		
+					swap ( location[k], location[k+1] );
 					finish = false;
 				}
 				
 			}
 		}
 }
+
 void generate( double a[][4], int i, double& mean, double& sd)
 {
 	double px(0), py(0), pz(0), m(0), E(0), Etot(0), Esqtot(0), meanEsq(0);
