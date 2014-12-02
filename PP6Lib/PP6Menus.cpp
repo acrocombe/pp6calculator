@@ -69,7 +69,6 @@ char day2menu()
 	std::cout << "Enter b to bubble sort an array              " << std::endl;
 	std::cout << "Enter g to generate events with random energy and momenta" << std::endl;
 	std::cout << "Enter a to analyse a data file, selecting all mu+ mu- events and reporting the 10 highest invariant mass pairs" << std::endl;
-
 	std::cin >> function2;
 
 	//Check for invalid input of function
@@ -94,7 +93,8 @@ char day3menu()
 	std::cout << "\n        --------Day 3 Operations--------             " << std::endl;
 	std::cout << "Choose the function to be carried out (use x to exit)   " << std::endl;
 	std::cout << "Enter b to boost a 4-vector in the z direction   " << std::endl;
-	std::cout << "Enter l to calculate the length of a 4-vector" << std::endl;
+	std::cout << "Enter i to calculate the interval of a 4-vector" << std::endl;
+	std::cout << "Enter a to analyse a data file, selecting all mu+ mu- events and reporting the 10 highest invariant mass pairs" << std::endl;
 	
 	std::cin >> function3;	
 

@@ -1,0 +1,8 @@
+#ifndef PP6CALCULATOR_PP6MUONANALYSIS_HH
+#define PP6CALCULATOR_PP6MUONANALYSIS_HH
+
+//Declerations for PP6MuonAnalysis function
+
+void muonAnalysis();
+
+#endif //PP6CALCULATOR_PP6MUONANALYSIS_HH

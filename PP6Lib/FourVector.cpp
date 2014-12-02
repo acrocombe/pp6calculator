@@ -3,39 +3,47 @@
 #include <cmath>
 
 #include "FourVector.hpp"
+#include "ThreeVector.hpp"
 
 //Definitions for FourVector constructors
-FourVector::FourVector(const double t_, const double x_, const double y_, const double z_) : t(t_), x(x_), y(y_), z(z_), s(0)
+FourVector::FourVector(const double t_, const ThreeVector& x_) : t(t_), x(x_), s(0)
 {
 	intervalFourVector();
 }
 
-FourVector::FourVector(const FourVector& other) : t(other.t), x(other.x), y(other.y), z(other.z), s(other.s)
+FourVector::FourVector(const FourVector& other) : t(other.t), x(other.x), s(other.s)
 {}
 
-void FourVector::setT(double t_)
+void FourVector::setT(const double t_)
 {
 	t = t_;
 	intervalFourVector();
 }
 
-void FourVector::setX(double x_)
+void FourVector::setX(const double x_)
 {
-	x = x_;
+	x.setX(x_);
 	intervalFourVector();
 }
 
-void FourVector::setY(double y_)
+void FourVector::setY(const double y_)
 {
-	y = y_;
+	x.setY(y_);
 	intervalFourVector();
 }
 
-void FourVector::setZ(double z_)
+void FourVector::setZ(const double z_)
 {
-	z = z_;
+	x.setZ(z_);
 	intervalFourVector();
 }
+
+void FourVector::setThreeVector(const ThreeVector& threevec_)
+{
+	x = threevec_;
+	intervalFourVector();
+}
+		
 
 //Definition for four-vector boost
 int FourVector::boost_z(const double v)
@@ -53,14 +61,19 @@ int FourVector::boost_z(const double v)
 	else 
 	{	
 		double gamma(0);
+		double x1 = x.getX();
+		double x2 = x.getY();
+		double x3 = x.getZ();
 
 		gamma = ( 1 / sqrt(( 1 - (v * v) )));
 
-		t = gamma * (t - (v * z));
-		x = x;
-		y = y;
-		z = gamma * (z - (v * t));
-	
+		t = gamma * (t - (v * x3));
+		x1 = x1;
+		x2 = x2;
+		x3 = gamma * (x3 - (v * t));
+
+		x.setX(x1), x.setY(x2), x.setZ(x3);
+		intervalFourVector();
 		return 0;
 	}
 }
@@ -70,8 +83,6 @@ FourVector& FourVector::operator+=(const FourVector& rhs)
 {
 	t += rhs.t;
 	x += rhs.x;
-	y += rhs.y;
-	z += rhs.z;
 	intervalFourVector();
 	return *this;
 }
@@ -80,8 +91,6 @@ FourVector& FourVector::operator-=(const FourVector& rhs)
 {
 	t -= rhs.t;
 	x -= rhs.x;
-	y -= rhs.y;
-	z -= rhs.z;
 	intervalFourVector();
 	return *this;
 }
@@ -90,8 +99,6 @@ FourVector& FourVector::operator*=(const double rhs)
 {
 	t *= rhs;
 	x *= rhs;
-	y *= rhs;
-	z *= rhs;
 	intervalFourVector();
 	return *this;
 }
@@ -100,8 +107,6 @@ FourVector& FourVector::operator/=(const double rhs)
 {
 	t /= rhs;
 	x /= rhs;
-	y /= rhs;
-	z /= rhs;
 	intervalFourVector();
 	return *this;
 }
@@ -112,8 +117,6 @@ FourVector& FourVector::operator=(const FourVector& rhs)
 	{
 		t = rhs.t;
 		x = rhs.x;
-		y = rhs.y;
-		z = rhs.z;
 		intervalFourVector();
 	}
 	return *this;
@@ -123,7 +126,10 @@ FourVector& FourVector::operator=(const FourVector& rhs)
 //Calculate the interval of a four-vector
 void FourVector::intervalFourVector() 
 {
-        s = (t * t) - ( (x * x) + (y * y) + (z * z));
+	double x1 = x.getX();
+	double x2 = x.getY();
+	double x3 = x.getZ();
+	s = (t * t) - ( (x1 * x1) + (x2 * x2) + (x3 * x3));
 }
 
 //Free operators for the FourVector class
